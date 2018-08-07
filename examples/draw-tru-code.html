@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TruCode JS Library Test</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+  <style>
+    #matrix,
+    #payload {
+      margin: 50px;
+      width: 380px;
+      height: 380px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>TruCode SVG Lab</h2>
+        <div id="payload">
+
+        </div>
+        <pre id="configDisplay">
+
+        </pre>
+      </div>
+      <div class="col-md-6">
+        <h2>Animation Configuration</h2>
+        <form action="#" id="animationConfigForm">
+
+          <div class="form-group">
+            <label for="subSetModulo">Percentage of Animated Dots (default 25%)</label>
+            <select class="form-control" name="subSetModulo" id="subSetModulo">
+              <option value="1">100%</option>
+              <option value="2">50%</option>
+              <option value="3">33%</option>
+              <option value="4" selected="selected">25% (default)</option>
+              <option value="5">20%</option>
+              <option value="6">16%</option>
+              <option value="8">12%</option>
+            </select>
+            <p class="help-block">Determines how many of the drawn dots are chosen for animation.</p>
+          </div>
+          <!-- Forward -->
+          <div class="form-group">
+            <label for="forwardDuration">Forward Animation Duration (default 1800ms)</label>
+            <input type="number" id="forwardDuration" min="0" max="25000" step="100" value="1800" name="forwardDuration" class="form-control">
+            <p class="help-block">The duration of the forward phase of the animation.</p>
+          </div>
+          <div class="form-group">
+            <label for="forwardDelayMultiplier">Forward Delay Multiplier (default 2ms)</label>
+            <input type="number" id="forwardDelayMultiplier" min="0" max="20" step="1" value="2" name="forwardDelayMultiplier" class="form-control">
+            <p class="help-block">The delay applied to the start of the first phase of animation for each dot.</p>
+          </div>
+          <div class="form-group">
+            <label for="forwardScaleFactor">Forward Scale Factor (default 2.25)</label>
+            <input type="number" id="forwardScaleFactor" min="1.00" max="20" step="0.25" value="2.25" name="forwardScaleFactor" class="form-control">
+            <p class="help-block">The final size to which each dot grows as part of the initial phase of the animation.</p>
+          </div>
+
+          <!-- Reverse -->
+          <div class="form-group">
+            <label for="reverseDuration">Reverse Animation Duration (default 1800ms)</label>
+            <input type="number" id="reverseDuration" min="0" max="25000" step="100" value="1800" name="reverseDuration" class="form-control">
+            <p class="help-block">The duration of the reverse phase of the animation.</p>
+          </div>
+          <div class="form-group">
+            <label for="reverseDelayMultiplier">Reverse Delay Multiplier (default 2ms)</label>
+            <input type="number" id="reverseDelayMultiplier" min="0" max="20" step="1" value="2" name="reverseDelayMultiplier" class="form-control">
+            <p class="help-block">The delay applied to the start of the reverse phase of animation for each dot.</p>
+          </div>
+          <div class="form-group">
+            <label for="reverseScaleFactor">Reverse Scale Factor (default 1.00)</label>
+            <input type="number" id="reverseScaleFactor" min="1.00" max="20" step="0.25" value="1.00" name="reverseScaleFactor" class="form-control">
+            <p class="help-block">The final size to which each dot shrinks at the end of the animations.</p>
+          </div>
+
+          <!-- Delay -->
+          <div class="form-group">
+            <label for="repeatDelay">Animation Repeat Delay (default 3600ms)</label>
+            <input type="number" id="repeatDelay" min="0" max="25000" step="100" value="3600" name="repeatDelay" class="form-control">
+            <p class="help-block">Amount of time in ms before the entire group animation restarts. Number of dots animation and forward and reverse
+              durations should be considered when selecting this value. Can potentially make code unreadable if too low.
+              Should be at minimum close to the sum of the forward and reverse durations.</p>
+          </div>
+          <p>
+            <input type="submit" value="Restart Animation" class="btn btn-primary btn-large">
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="../dist/trucode-0.1.0.js"></script>
+
+  <script type="text/javascript">
+    // var forwardDurationRange = document.getElementById('forwardDuration');
+    // forwardDurationRange.addEventListener('change', function(e){
+    //   var newValue = e.target.value + "ms";
+    //   document.getElementById('forwardDurationValue').innerHTML = newValue;
+    // })
+
+    window.animationConfig = {
+      subSetModulo: 6,
+      forwardDuration: 100,
+      forwardDelayMultiplier: 2,
+      forwardScaleFactor: 20,
+      reverseDuration: 500,
+      reverseDelayMultiplier: 2,
+      reverseScaleFactor: 1.00,
+      repeatDelay: 3600
+    };
+
+    function determineConfig() {
+      var subSetModulo           = document.getElementById('subSetModulo').value;
+      var forwardDuration        = document.getElementById('forwardDuration').value;
+      var forwardDelayMultiplier = document.getElementById('forwardDelayMultiplier').value;
+      var forwardScaleFactor     = document.getElementById('forwardScaleFactor').value;
+      var reverseDuration        = document.getElementById('reverseDuration').value;
+      var reverseDelayMultiplier = document.getElementById('reverseDelayMultiplier').value;
+      var reverseScaleFactor     = document.getElementById('reverseScaleFactor').value;
+      var repeatDelay            = document.getElementById('repeatDelay').value;
+
+      window.animationConfig = {
+        "subSetModulo": subSetModulo,
+        "forwardDuration": forwardDuration,
+        "forwardDelayMultiplier": forwardDelayMultiplier,
+        "forwardScaleFactor": forwardScaleFactor,
+        "reverseDuration": reverseDuration,
+        "reverseDelayMultiplier": reverseDelayMultiplier,
+        "reverseScaleFactor": reverseScaleFactor,
+        "repeatDelay": repeatDelay
+      };
+
+      displayConfig();
+    }
+
+    function displayConfig() {
+      document.getElementById('configDisplay').innerHTML = JSON.stringify(window.animationConfig, undefined, 2);
+    }
+
+    function startAnimation() {
+      Trusona._drawTruCode(
+        document.getElementById('payload'),
+        "eyJhbGciOiJIUzI1NiJ9.eyJyZXMiOiJ0cnUtY2x1Yi1zdGFnaW5nLmhlcm9rdWFwcC5jb20iLCJsdmwiOjEsImFjdCI6ImxvZ2luIiwicmVnIjoic2luZ2xlIiwicnBpIjoiNDc0YTIzMTgtZjEzOS00ZmIyLWJhODUtOGJmZDQxMzczNzVlIiwiYmlkIjoiMjU0YWQ4NzEtMjRjMy00NWEzLWFjNmItMTY1Y2NmMTRlMzAzIiwiZXhwIjoxNTA4NDYxNjkwNTE1LCJyaWQiOiIyNTZmZDMzZC1lMzI5LTQwN2MtODNhOC04Yzc4NDJmNDQxZGMifQ.rN5YOQl9zF78OUpD3btBVeI0XbdFOUiZRW17MzO0ckc",
+        {
+          "shapeColors": ["#7B46D1", "#7B46D1", "#7B46D1", "#5856c2", "#4a4cc2", "#5a57b0", "#4d4a97"],
+          "dotColor": "#7B46D1",
+          "animationConfig": window.animationConfig
+        }
+      )
+    }
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+      var form = document.getElementById('animationConfigForm');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        determineConfig();
+        startAnimation();
+        return false;
+      })
+    });
+
+    determineConfig();
+    startAnimation();
+
+  </script>
+</body>
+
+</html>

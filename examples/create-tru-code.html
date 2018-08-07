@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Web SDK Test</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+  <style>
+    #payload {
+      margin: 50px;
+      width: 380px;
+      height: 380px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Web SDK - getTruCode Test</h2>
+        <div id="payload">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../dist/trucode-0.1.0.js"></script>
+
+  <script type="text/javascript">
+    Trusona.createTruCode({
+        truCodeUrl: 'https://api.staging.trusona.net',
+        relyingPartyId: '2AF12AE7-B57E-4366-BEB4-B29F7E0C52EF'
+      },
+      (truCode) => console.log(truCode)
+    )
+  </script>
+</body>
+
+</html>
