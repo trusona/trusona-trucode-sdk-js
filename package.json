@@ -4,8 +4,9 @@
   "description": "Library for rendering TruCodes used for identifying Trusona enabled devices",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel-node tools/build.js",
-    "test": "mocha --compilers js:babel-register"
+    "build": "babel-node bin/build.js",
+    "test": "mocha --compilers js:babel-register",
+    "version": "babel-node bin/sync-version.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "chai": "^4.1.2",
     "del": "3.0.0",
     "mocha": "4.0.0",
+    "replace-in-file": "^3.4.0",
     "rollup": "0.50.0",
     "rollup-plugin-babel": "3.0.2",
     "rollup-plugin-commonjs": "^8.2.1",
@@ -31,6 +33,7 @@
     "rollup-plugin-node-resolve": "3.0.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^3.0.0",
+    "simple-git": "^1.96.0",
     "sinon": "^4.2.2"
   },
   "bugs": {
