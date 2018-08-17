@@ -38,6 +38,7 @@ export class TruCodeRenderer {
         }
       }
     }
+    properties.truCodeElementId = properties.truCodeElement.id
 
     this.properties = properties
 
@@ -65,10 +66,11 @@ export class TruCodeRenderer {
     if (this.properties.onPayload) {
       this.properties.onPayload(truCode.payload)
     }
-    this.properties.truCodeElement.innerHTML = ''
+    var element = document.getElementById(this.properties.truCodeElementId)
+    element.innerHTML = ''
     new TruCode(
       SVG(
-        this.properties.truCodeElement.id), truCode.payload,
+        this.properties.truCodeElementId), truCode.payload,
         this.properties.truCodeConfig.qr
     ).draw()
   }
