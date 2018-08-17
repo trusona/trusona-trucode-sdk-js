@@ -68,7 +68,7 @@ export class TruCodeRenderer {
     this.properties.truCodeElement.innerHTML = ''
     new TruCode(
       SVG(
-        this.properties.truCodeElement.id), truCode.payload,
+        this.properties.truCodeElement), truCode.payload,
         this.properties.truCodeConfig.qr
     ).draw()
   }
