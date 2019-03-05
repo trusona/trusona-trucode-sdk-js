@@ -43,7 +43,7 @@
   "dependencies": {
     "axios": "0.16.2",
     "js-base64": "^2.4.3",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "qrcode-svg": "^1.0.0",
     "svg.js": "^2.6.3",
     "url-parse": "^1.4.3"
