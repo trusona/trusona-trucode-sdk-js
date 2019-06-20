@@ -4,7 +4,7 @@
   "description": "Library for rendering TruCodes used for identifying Trusona enabled devices",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack && webpack --config webpack-web.config.js",
+    "build": "webpack",
     "test": "mocha --require @babel/register",
     "version": "babel-node bin/sync-version.js"
   },
