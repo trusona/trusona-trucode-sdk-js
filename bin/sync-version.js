@@ -11,8 +11,9 @@ const options = {
 
 replace(options)
   .then(changes => {
-    console.log(`Sync'd versions in: ${changes.join(', ')}`)
-    git.add(changes)
+    const changedFilenames = changes.map((change) => change.file)
+    console.log(`Sync'd versions in: ${changedFilenames.join(', ')}`)
+    git.add(changedFilenames)
   })
   .catch(error => {
     console.error('Error occurred:', error)

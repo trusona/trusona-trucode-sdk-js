@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "test": "mocha --require @babel/register",
-    "version": "babel-node bin/sync-version.js"
+    "version": "node bin/sync-version.js"
   },
   "repository": {
     "type": "git",
