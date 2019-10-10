@@ -48,7 +48,7 @@ export class TruCodeRenderer {
         properties.truCodeConfig.truCodeUrl,
         properties.truCodeConfig.relyingPartyId
       )
-      this.poller = new TruCodePoller(service)
+      this.poller = new TruCodePoller(service, properties.window)
     }
 
     this.poller

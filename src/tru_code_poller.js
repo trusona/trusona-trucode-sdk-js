@@ -3,7 +3,7 @@ const MIN_WAIT = 5000
 const BUFFER = 10000
 
 export class TruCodePoller {
-  constructor (trucodeService) {
+  constructor (trucodeService, window) {
     this.trucodeService = trucodeService
 
     this.completed = false
@@ -13,6 +13,8 @@ export class TruCodePoller {
     this.payloadHandler = () => {}
     this.pairedHandler = () => {}
     this.errorHandler = () => {}
+
+    window.addEventListener('beforeunload', () => this._completed())
   }
 
   onPayload (handler) {
