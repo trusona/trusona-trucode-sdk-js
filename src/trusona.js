@@ -5,6 +5,7 @@ import { TruCodeService } from './tru_code_service'
 
 class Trusona {
   static renderTruCode (properties) {
+    properties.window = window
     new TruCodeRenderer(properties).render()
   }
 

@@ -1,4 +1,5 @@
 import './test_helper'
+import MockWindow from './mock_window'
 import { TruCodeRenderer } from '../src/tru_code_renderer'
 
 describe('TruCodeRenderer', () => {
@@ -14,7 +15,8 @@ describe('TruCodeRenderer', () => {
       truCodeElement: sinon.stub(),
       onPaired: () => sinon.stub(),
       onError: () => sinon.stub(),
-      onPayload: () => sinon.stub()
+      onPayload: () => sinon.stub(),
+      window: new MockWindow()
     }
 
     mockPoller = {

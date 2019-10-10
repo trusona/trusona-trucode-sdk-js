@@ -1,10 +1,13 @@
 import './test_helper'
+import MockWindow from './mock_window'
 import { TruCodePoller } from '../src/tru_code_poller'
 
 describe('TruCodePoller', () => {
   const trucodeId = 'theonetrucode'
 
   let mockTrucodeService
+  let window
+
   let sut
 
   beforeEach(() => {
@@ -12,7 +15,9 @@ describe('TruCodePoller', () => {
       create: sinon.stub(),
       get: sinon.stub()
     }
-    sut = new TruCodePoller(mockTrucodeService)
+    window = new MockWindow()
+
+    sut = new TruCodePoller(mockTrucodeService, window)
   })
 
   describe('#constructor', () => {
@@ -32,6 +37,13 @@ describe('TruCodePoller', () => {
 
     it('should not have any errors', () => {
       expect(sut.errors).to.equal(0)
+    })
+
+    it('registers a callback to stop polling when the browser exits', () => {
+      expect(window.addEventListener.calledWith(
+        'beforeunload',
+        sinon.match.func
+      )).to.be.true()
     })
   })
 
@@ -386,6 +398,15 @@ describe('TruCodePoller', () => {
 
       it('should call _handleError', () => {
         return sut.poll().then(() => expect(sut._handleError.called).to.be.true())
+      })
+    })
+
+    context('when the browser exits', () => {
+      it('stops polling', () => {
+        window.addEventListener.callArg(1)
+        return sut.poll().then(() => {
+          expect(sut._getTrucode.called).to.be.false()
+        })
       })
     })
   })
