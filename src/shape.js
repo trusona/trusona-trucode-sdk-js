@@ -4,12 +4,12 @@ import uniq from 'lodash/uniq'
 import min from 'lodash/min'
 
 export class Shape {
-  constructor(squares) {
+  constructor (squares) {
     this.squares = squares
   }
 
-  drawSquare(drawing, shapeColors, width) {
-    let filledWith = "#000000"
+  drawSquare (drawing, shapeColors, width) {
+    let filledWith = '#000000'
 
     if (shapeColors.constructor === Array) {
       if (shapeColors.length > 0) {
@@ -33,16 +33,16 @@ export class Shape {
     })
   }
 
-  draw(drawing, shapeColors, drawToTheEast) {
+  draw (drawing, shapeColors, drawToTheEast) {
     var squares = uniq(this.squares, function (element) {
-      return element.x + "," + element.y + "," + element.w + "," + element.h
+      return element.x + ',' + element.y + ',' + element.w + ',' + element.h
     })
 
     var minX = min(squares, function (s) {
       return s.x
     })
 
-    let filledWith = "#000000"
+    let filledWith = '#000000'
 
     if (shapeColors.constructor === Array) {
       if (shapeColors.length > 0) {

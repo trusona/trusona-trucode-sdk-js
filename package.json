@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack",
-    "test": "mocha --require @babel/register",
+    "lint-fix": "standard --fix",
+    "test": "standard && mocha --require @babel/register",
     "version": "node bin/sync-version.js"
   },
   "repository": {
@@ -25,10 +26,12 @@
     "@babel/register": "^7.6.0",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
+    "dirty-chai": "^2.0.1",
     "mocha": "^6.2.0",
     "replace-in-file": "^4.1.3",
     "simple-git": "^1.126.0",
     "sinon": "^7.4.2",
+    "standard": "^14.3.1",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8"
   },
@@ -43,5 +46,14 @@
     "qrcode-svg": "^1.0.0",
     "svg.js": "^2.7.1",
     "url-parse": "^1.4.7"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ],
+    "globals": [
+      "expect",
+      "sinon"
+    ]
   }
 }

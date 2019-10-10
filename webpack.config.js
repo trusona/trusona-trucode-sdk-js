@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 const packageJson = require('./package.json')
 
 module.exports = [{
@@ -46,4 +46,4 @@ module.exports = [{
       use: 'babel-loader'
     }]
   }
-}];
+}]

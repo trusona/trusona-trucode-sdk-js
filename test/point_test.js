@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import './test_helper'
 import { Point } from '../src/point'
 import { Grid } from '../src/grid'
 
@@ -13,19 +13,19 @@ describe('Point', () => {
     })
 
     it('optionally accepts a enabled status', () => {
-      let sut = new Point(1, 0)
-      expect(sut.enabled).to.be.false
+      const sut = new Point(1, 0)
+      expect(sut.enabled).to.be.false()
     })
 
     context('with enabled populated', () => {
       it('should be true if enabled', () => {
         const sut = new Point(1, 0, true)
-        expect(sut.enabled).to.be.true
+        expect(sut.enabled).to.be.true()
       })
 
       it('should be false if not enabled', () => {
         const sut = new Point(1, 0, false)
-        expect(sut.enabled).to.be.false
+        expect(sut.enabled).to.be.false()
       })
     })
   })
@@ -39,14 +39,14 @@ describe('Point', () => {
       it('should be disabled', () => {
         const sut = new Point(1, 0, true)
         sut.disable()
-        expect(sut.enabled).to.be.false
+        expect(sut.enabled).to.be.false()
       })
     })
     context('when the Point is currently disabled', () => {
       it('should remain disabled', () => {
         const sut = new Point(1, 0, false)
         sut.disable()
-        expect(sut.enabled).to.be.false
+        expect(sut.enabled).to.be.false()
       })
     })
   })
@@ -54,7 +54,7 @@ describe('Point', () => {
   describe('coordinates', () => {
     it('knows about its coordinates', () => {
       const sut = new Point(4, 5)
-      expect(sut.coords()).to.be.equal("4,5")
+      expect(sut.coords()).to.be.equal('4,5')
     })
   })
 
@@ -64,7 +64,7 @@ describe('Point', () => {
         const grid = new Grid([])
         const sut = new Point(4, 5)
 
-        expect(sut.hasNoNeighbors(grid)).to.be.true
+        expect(sut.hasNoNeighbors(grid)).to.be.true()
       })
     })
     context('where there are neighbors', () => {
@@ -73,20 +73,20 @@ describe('Point', () => {
           // 0 0 0
           // 0 1 0
           // 0 0 0
-          const grid = new Grid([[0, 0, 0], [0, 1, 0], [0,0,0]])
+          const grid = new Grid([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
           const sut = new Point(1, 1)
 
-          expect(sut.hasNoNeighbors(grid)).to.be.true
+          expect(sut.hasNoNeighbors(grid)).to.be.true()
         })
       })
       context('and they are to the east', () => {
         it('should know that there is a neighbor', () => {
           // 1 1
           // 0 0
-          const grid = new Grid([[1,0], [1,0]])
+          const grid = new Grid([[1, 0], [1, 0]])
           const sut = new Point(0, 0)
 
-          expect(sut.hasNoNeighbors(grid)).to.be.false
+          expect(sut.hasNoNeighbors(grid)).to.be.false()
         })
       })
       context('and they are to the south', () => {
@@ -96,7 +96,7 @@ describe('Point', () => {
           const grid = new Grid([[1, 1], [0, 0]])
           const sut = new Point(0, 0)
 
-          expect(sut.hasNoNeighbors(grid)).to.be.false
+          expect(sut.hasNoNeighbors(grid)).to.be.false()
         })
       })
       context('and they are to the north', () => {
@@ -106,7 +106,7 @@ describe('Point', () => {
           const grid = new Grid([[1, 1], [0, 0]])
           const sut = new Point(0, 1)
 
-          expect(sut.hasNoNeighbors(grid)).to.be.false
+          expect(sut.hasNoNeighbors(grid)).to.be.false()
         })
       })
       context('and they are to the west', () => {
@@ -116,12 +116,11 @@ describe('Point', () => {
           const grid = new Grid([[1, 0], [1, 0]])
           const sut = new Point(1, 0)
 
-          expect(sut.hasNoNeighbors(grid)).to.be.false
+          expect(sut.hasNoNeighbors(grid)).to.be.false()
         })
       })
     })
   })
-
 
   describe('looking for connected neighbors', () => {
     describe('as part of a square', () => {
@@ -159,7 +158,7 @@ describe('Point', () => {
           // 1 1 1 0
           // 0 0 0 0
           const grid = new Grid(
-            [[1, 1, 1, 0], [1, 1, 1, 0], [1,1,1,0], [0, 0, 0, 0]]
+            [[1, 1, 1, 0], [1, 1, 1, 0], [1, 1, 1, 0], [0, 0, 0, 0]]
           )
           const sut = grid.findPoint(0, 0)
           const result = sut.partOfSquare(grid)
@@ -178,7 +177,7 @@ describe('Point', () => {
           )
           const sut = grid.findPoint(0, 0)
           const result = sut.partOfSquare(grid)
-          expect(result).to.be.false
+          expect(result).to.be.false()
         })
       })
 
@@ -193,7 +192,7 @@ describe('Point', () => {
           )
           const sut = grid.findPoint(0, 0)
           const result = sut.partOfSquare(grid)
-          expect(result).to.be.false
+          expect(result).to.be.false()
         })
       })
     })
@@ -209,8 +208,7 @@ describe('Point', () => {
           const neighbors = sut.contiguousEasternNeighbors(grid)
           expect(neighbors[0].x).to.eq(0)
           expect(neighbors[0].y).to.eq(0)
-          expect(neighbors[0].enabled).to.be.true
-
+          expect(neighbors[0].enabled).to.be.true()
         })
 
         it('they should be collected as easterly neighbors', () => {
@@ -218,22 +216,20 @@ describe('Point', () => {
           // 1 0 1
           // 0 1 0
           const grid = new Grid([[1, 1, 0], [1, 0, 1], [1, 1, 0]])
-          const sut = grid.findPoint(0,0)
+          const sut = grid.findPoint(0, 0)
           const neighbors = sut.contiguousEasternNeighbors(grid)
           expect(neighbors.length).to.equal(3)
           expect(neighbors[0].x).to.eq(0)
           expect(neighbors[0].y).to.eq(0)
-          expect(neighbors[0].enabled).to.be.true
+          expect(neighbors[0].enabled).to.be.true()
 
           expect(neighbors[1].x).to.eq(1)
           expect(neighbors[1].y).to.eq(0)
-          expect(neighbors[1].enabled).to.be.true
+          expect(neighbors[1].enabled).to.be.true()
 
           expect(neighbors[2].x).to.eq(2)
           expect(neighbors[2].y).to.eq(0)
-          expect(neighbors[2].enabled).to.be.true
-
-
+          expect(neighbors[2].enabled).to.be.true()
         })
       })
 
@@ -248,7 +244,7 @@ describe('Point', () => {
           expect(neighbors.length).to.equal(1)
           expect(neighbors[0].x).to.eq(0)
           expect(neighbors[0].y).to.eq(0)
-          expect(neighbors[0].enabled).to.be.true
+          expect(neighbors[0].enabled).to.be.true()
         })
       })
     })
@@ -264,8 +260,7 @@ describe('Point', () => {
           const neighbors = sut.contiguousSouthernNeighbors(grid)
           expect(neighbors[0].x).to.eq(0)
           expect(neighbors[0].y).to.eq(0)
-          expect(neighbors[0].enabled).to.be.true
-
+          expect(neighbors[0].enabled).to.be.true()
         })
 
         it('they should be collected as southern neighbors', () => {
@@ -278,17 +273,15 @@ describe('Point', () => {
           expect(neighbors.length).to.equal(3)
           expect(neighbors[0].x).to.eq(0)
           expect(neighbors[0].y).to.eq(0)
-          expect(neighbors[0].enabled).to.be.true
+          expect(neighbors[0].enabled).to.be.true()
 
           expect(neighbors[1].x).to.eq(0)
           expect(neighbors[1].y).to.eq(1)
-          expect(neighbors[1].enabled).to.be.true
+          expect(neighbors[1].enabled).to.be.true()
 
           expect(neighbors[2].x).to.eq(0)
           expect(neighbors[2].y).to.eq(2)
-          expect(neighbors[2].enabled).to.be.true
-
-
+          expect(neighbors[2].enabled).to.be.true()
         })
       })
 
@@ -303,12 +296,9 @@ describe('Point', () => {
           expect(neighbors.length).to.equal(1)
           expect(neighbors[0].x).to.eq(0)
           expect(neighbors[0].y).to.eq(0)
-          expect(neighbors[0].enabled).to.be.true
+          expect(neighbors[0].enabled).to.be.true()
         })
       })
     })
   })
-
-
-
 })

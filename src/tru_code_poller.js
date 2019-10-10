@@ -1,36 +1,36 @@
 const MAX_ERRORS = 5
-const MIN_WAIT   = 5000
-const BUFFER     = 10000
+const MIN_WAIT = 5000
+const BUFFER = 10000
 
 export class TruCodePoller {
-  constructor(trucodeService) {
-    this.trucodeService        = trucodeService
+  constructor (trucodeService) {
+    this.trucodeService = trucodeService
 
     this.completed = false
     this.pollCount = 0
-    this.errors    = 0
+    this.errors = 0
 
     this.payloadHandler = () => {}
-    this.pairedHandler  = () => {}
-    this.errorHandler   = () => {}
+    this.pairedHandler = () => {}
+    this.errorHandler = () => {}
   }
 
-  onPayload(handler) {
+  onPayload (handler) {
     this.payloadHandler = handler
     return this
   }
 
-  onPaired(handler) {
+  onPaired (handler) {
     this.pairedHandler = handler
     return this
   }
 
-  onError(handler) {
+  onError (handler) {
     this.errorHandler = handler
     return this
   }
 
-  poll() {
+  poll () {
     if (this.completed) {
       return Promise.resolve()
     }
@@ -50,7 +50,7 @@ export class TruCodePoller {
       .catch(this._handleError.bind(this))
   }
 
-  _getTrucode() {
+  _getTrucode () {
     return this.trucodeService.create()
       .then((response) => {
         this.payloadHandler(response.data)
@@ -58,17 +58,17 @@ export class TruCodePoller {
       })
   }
 
-  _scheduleNextTrucode(currentTrucode, timeout = setTimeout) {
+  _scheduleNextTrucode (currentTrucode, timeout = setTimeout) {
     const timeToExpire = currentTrucode.expires_at - new Date().getTime()
     timeout(this.poll.bind(this), Math.max(MIN_WAIT, timeToExpire - BUFFER))
     return currentTrucode
   }
 
-  _get(trucode) {
+  _get (trucode) {
     return this.trucodeService.get(trucode.id)
   }
 
-  _handleResponse(response) {
+  _handleResponse (response) {
     if (response.data.paired) {
       this.pairedHandler(response.data.id)
       this._completed()
@@ -76,23 +76,23 @@ export class TruCodePoller {
     this._pollComplete()
   }
 
-  _handleError() {
+  _handleError () {
     this.errors++
     this._pollComplete()
   }
 
-  _pollComplete() {
+  _pollComplete () {
     this.pollCount--
     if (this.pollCount < 1) {
       this.poll()
     }
   }
 
-  _completed() {
+  _completed () {
     this.completed = true
 
     this.payloadHandler = () => {}
-    this.pairedHandler  = () => {}
-    this.errorHandler   = () => {}
+    this.pairedHandler = () => {}
+    this.errorHandler = () => {}
   }
 }

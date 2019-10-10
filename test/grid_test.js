@@ -1,10 +1,10 @@
-import { expect } from 'chai'
+import './test_helper'
 import { Grid } from '../src/grid'
 
 describe('Grid', () => {
   let matrix
 
-  beforeEach( () => {
+  beforeEach(() => {
     matrix = [[1, 1], [1, 1]]
   })
 
@@ -46,7 +46,7 @@ describe('Grid', () => {
       it('should return nothing', () => {
         const sut = new Grid(matrix)
         const point = sut.findPoint(42, 42)
-        expect(point).to.not.exist
+        expect(point).to.not.exist()
       })
     })
 
@@ -54,13 +54,13 @@ describe('Grid', () => {
       it('should not return a disabled Point', () => {
         const sut = new Grid([[0]])
         const point = sut.findPoint(0, 0)
-        expect(point).to.not.exist
+        expect(point).to.not.exist()
       })
 
       it('should return an enabled Point', () => {
         const sut = new Grid([[1]])
-        const point = sut.findPoint(0,0)
-        expect(point.enabled).to.be.true
+        const point = sut.findPoint(0, 0)
+        expect(point.enabled).to.be.true()
       })
     })
 
@@ -68,11 +68,11 @@ describe('Grid', () => {
       it('should return a Point only if enabled matches', () => {
         // 1 1
         // 0 0
-        const sut = new Grid([[1,0], [1,0]])
-        expect(sut.findPoint(0, 0, true)).to.exist
-        expect(sut.findPoint(0, 1, true)).to.not.exist
-        expect(sut.findPoint(1, 0, true)).to.exist
-        expect(sut.findPoint(1, 0, false)).to.not.exist
+        const sut = new Grid([[1, 0], [1, 0]])
+        expect(sut.findPoint(0, 0, true)).to.exist()
+        expect(sut.findPoint(0, 1, true)).to.not.exist()
+        expect(sut.findPoint(1, 0, true)).to.exist()
+        expect(sut.findPoint(1, 0, false)).to.not.exist()
       })
     })
   })
@@ -84,7 +84,7 @@ describe('Grid', () => {
       const sut = new Grid([[1, 0], [1, 0]])
       const point = sut.findPoint(0, 1)
       sut.disablePoint(point)
-      expect(sut.findPoint(0, 1)).to.be.undefined
+      expect(sut.findPoint(0, 1)).to.be.undefined()
     })
   })
 
@@ -93,8 +93,8 @@ describe('Grid', () => {
       const sut = new Grid(matrix)
       const points = [sut.findPoint(0, 1), sut.findPoint(1, 1)]
       sut.disablePoints(points)
-      expect(sut.findPoint(0, 1)).to.be.undefined
-      expect(sut.findPoint(1, 1)).to.be.undefined
+      expect(sut.findPoint(0, 1)).to.be.undefined()
+      expect(sut.findPoint(1, 1)).to.be.undefined()
     })
   })
 })

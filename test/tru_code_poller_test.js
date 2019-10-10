@@ -1,9 +1,8 @@
-import { expect } from 'chai'
-import sinon from 'sinon'
-import {TruCodePoller} from '../src/tru_code_poller'
+import './test_helper'
+import { TruCodePoller } from '../src/tru_code_poller'
 
 describe('TruCodePoller', () => {
-  const trucodeId  = 'theonetrucode'
+  const trucodeId = 'theonetrucode'
 
   let mockTrucodeService
   let sut
@@ -24,7 +23,7 @@ describe('TruCodePoller', () => {
     })
 
     it('should not be completed', () => {
-      expect(sut.completed).to.be.false
+      expect(sut.completed).to.be.false()
     })
 
     it('should not have anything polling', () => {
@@ -82,7 +81,7 @@ describe('TruCodePoller', () => {
 
     it('should call the payload handler with the trucode data', () => {
       return sut._getTrucode().then((id) => {
-        expect(sut.payloadHandler.calledWith(trucodeData)).to.be.true
+        expect(sut.payloadHandler.calledWith(trucodeData)).to.be.true()
       })
     })
   })
@@ -92,7 +91,7 @@ describe('TruCodePoller', () => {
     let mockSetTimeout
 
     beforeEach(() => {
-      currentTime    = new Date().getTime()
+      currentTime = new Date().getTime()
       sinon.useFakeTimers(currentTime)
       mockSetTimeout = sinon.stub()
     })
@@ -105,7 +104,7 @@ describe('TruCodePoller', () => {
       it('should schedule the next trucode 10 seconds before it expires', () => {
         sut._scheduleNextTrucode({ expires_at: currentTime + 30000 }, mockSetTimeout)
 
-        expect(mockSetTimeout.calledWith(sinon.match.func, 20000)).to.be.true
+        expect(mockSetTimeout.calledWith(sinon.match.func, 20000)).to.be.true()
       })
     })
 
@@ -113,14 +112,14 @@ describe('TruCodePoller', () => {
       it('should schedule the next trucode in 5 seconds', () => {
         sut._scheduleNextTrucode({ expires_at: 0 }, mockSetTimeout)
 
-        expect(mockSetTimeout.calledWith(sinon.match.func, 5000)).to.be.true
+        expect(mockSetTimeout.calledWith(sinon.match.func, 5000)).to.be.true()
       })
     })
   })
 
   describe('#_get', () => {
-    const trucode      = { id: trucodeId }
-    const statusData  = { id: trucodeId, paired: false }
+    const trucode = { id: trucodeId }
+    const statusData = { id: trucodeId, paired: false }
 
     it('should call get on the trucodeService with the trucodeId', () => {
       mockTrucodeService.get
@@ -136,43 +135,43 @@ describe('TruCodePoller', () => {
   describe('#_handleResponse', () => {
     beforeEach(() => {
       sut.pairedHandler = sinon.stub()
-      sut._completed    = sinon.stub()
+      sut._completed = sinon.stub()
       sut._pollComplete = sinon.stub()
     })
 
     context('with an unpaired trucode', () => {
       beforeEach(() => {
-        sut._handleResponse({ data: { id: trucodeId, paired: false }})
+        sut._handleResponse({ data: { id: trucodeId, paired: false } })
       })
 
       it('should not call the pairedHandler', () => {
-        expect(sut.pairedHandler.called).to.be.false
+        expect(sut.pairedHandler.called).to.be.false()
       })
 
       it('should not call _completed', () => {
-        expect(sut._completed.called).to.be.false
+        expect(sut._completed.called).to.be.false()
       })
 
       it('should call _pollComplete', () => {
-        expect(sut._pollComplete.called).to.be.true
+        expect(sut._pollComplete.called).to.be.true()
       })
     })
 
     context('with a paired trucode', () => {
       beforeEach(() => {
-        sut._handleResponse({ data: { id: trucodeId, paired: true }})
+        sut._handleResponse({ data: { id: trucodeId, paired: true } })
       })
 
       it('should call the pairedHandler', () => {
-        expect(sut.pairedHandler.calledWith(trucodeId)).to.be.true
+        expect(sut.pairedHandler.calledWith(trucodeId)).to.be.true()
       })
 
       it('should call _completed', () => {
-        expect(sut._completed.called).to.be.true
+        expect(sut._completed.called).to.be.true()
       })
 
       it('should call _pollComplete', () => {
-        expect(sut._pollComplete.called).to.be.true
+        expect(sut._pollComplete.called).to.be.true()
       })
     })
   })
@@ -188,7 +187,7 @@ describe('TruCodePoller', () => {
     })
 
     it('should call _pollComplete', () => {
-      expect(sut._pollComplete.called).to.be.true
+      expect(sut._pollComplete.called).to.be.true()
     })
   })
 
@@ -208,7 +207,7 @@ describe('TruCodePoller', () => {
       })
 
       it('should not start another poller', () => {
-        expect(sut.poll.called).to.be.false
+        expect(sut.poll.called).to.be.false()
       })
     })
 
@@ -216,56 +215,56 @@ describe('TruCodePoller', () => {
       it('should start another poller', () => {
         sut.pollCount = 1
         sut._pollComplete()
-        expect(sut.poll.called).to.be.true
+        expect(sut.poll.called).to.be.true()
       })
     })
   })
 
   describe('#poll', () => {
-    const trucode   = { id: trucodeId }
-    const response = { data: { id: trucodeId, paired: true }}
+    const trucode = { id: trucodeId }
+    const response = { data: { id: trucodeId, paired: true } }
 
     beforeEach(() => {
-      sut._getTrucode          = sinon.stub()
+      sut._getTrucode = sinon.stub()
       sut._scheduleNextTrucode = sinon.stub()
-      sut._get          = sinon.stub()
-      sut._handleResponse     = sinon.stub()
-      sut._handleError        = sinon.stub()
+      sut._get = sinon.stub()
+      sut._handleResponse = sinon.stub()
+      sut._handleError = sinon.stub()
     })
 
     context('with the poller already completed', () => {
       beforeEach(() => {
-        sut.completed    = true
+        sut.completed = true
         sut.errorHandler = sinon.stub()
-        sut._completed   = sinon.stub()
+        sut._completed = sinon.stub()
       })
 
       it('should not call the errorHandler', () => {
-        return sut.poll().then(() => expect(sut.errorHandler.called).to.be.false)
+        return sut.poll().then(() => expect(sut.errorHandler.called).to.be.false())
       })
 
       it('should not call _completed', () => {
-        return sut.poll().then(() => expect(sut._completed.called).to.be.false)
+        return sut.poll().then(() => expect(sut._completed.called).to.be.false())
       })
 
       it('should not call _getTrucode', () => {
-        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.false)
+        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.false())
       })
 
       it('should not call _scheduleNextTrucode', () => {
-        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false)
+        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false())
       })
 
       it('should not call _get', () => {
-        return sut.poll().then(() => expect(sut._get.called).to.be.false)
+        return sut.poll().then(() => expect(sut._get.called).to.be.false())
       })
 
       it('should not call _handleResponse', () => {
-        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.false)
+        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.false())
       })
 
       it('should not call _handleError', () => {
-        return sut.poll().then(() => expect(sut._handleError.called).to.be.false)
+        return sut.poll().then(() => expect(sut._handleError.called).to.be.false())
       })
     })
 
@@ -273,35 +272,35 @@ describe('TruCodePoller', () => {
       beforeEach(() => {
         sut.errors = 5
         sut.errorHandler = sinon.stub()
-        sut._completed   = sinon.stub()
+        sut._completed = sinon.stub()
       })
 
       it('should call the errorHandler', () => {
-        return sut.poll().then(() => expect(sut.errorHandler.called).to.be.true)
+        return sut.poll().then(() => expect(sut.errorHandler.called).to.be.true())
       })
 
       it('should call _completed', () => {
-        return sut.poll().then(() => expect(sut._completed.called).to.be.true)
+        return sut.poll().then(() => expect(sut._completed.called).to.be.true())
       })
 
       it('should not call _getTrucode', () => {
-        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.false)
+        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.false())
       })
 
       it('should not call _scheduleNextTrucode', () => {
-        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false)
+        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false())
       })
 
       it('should not call _get', () => {
-        return sut.poll().then(() => expect(sut._get.called).to.be.false)
+        return sut.poll().then(() => expect(sut._get.called).to.be.false())
       })
 
       it('should not call _handleResponse', () => {
-        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.false)
+        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.false())
       })
 
       it('should not call _handleError', () => {
-        return sut.poll().then(() => expect(sut._handleError.called).to.be.false)
+        return sut.poll().then(() => expect(sut._handleError.called).to.be.false())
       })
     })
 
@@ -318,23 +317,23 @@ describe('TruCodePoller', () => {
       })
 
       it('should call _getTrucode', () => {
-        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.true)
+        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.true())
       })
 
       it('should call _scheduleNextTrucode', () => {
-        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.true)
+        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.true())
       })
 
       it('should call _get', () => {
-        return sut.poll().then(() => expect(sut._get.called).to.be.true)
+        return sut.poll().then(() => expect(sut._get.called).to.be.true())
       })
 
       it('should call _handleResponse', () => {
-        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.true)
+        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.true())
       })
 
       it('should not call _handleError', () => {
-        return sut.poll().then(() => expect(sut._handleError.called).to.be.false)
+        return sut.poll().then(() => expect(sut._handleError.called).to.be.false())
       })
     })
 
@@ -348,45 +347,45 @@ describe('TruCodePoller', () => {
       })
 
       it('should not call _getTrucode', () => {
-        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.false)
+        return sut.poll().then(() => expect(sut._getTrucode.called).to.be.false())
       })
 
       it('should not call _scheduleNextTrucode', () => {
-        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false)
+        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false())
       })
 
       it('should not call _get', () => {
-        return sut.poll().then(() => expect(sut._get.called).to.be.false)
+        return sut.poll().then(() => expect(sut._get.called).to.be.false())
       })
 
       it('should not call _handleResponse', () => {
-        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.false)
+        return sut.poll().then(() => expect(sut._handleResponse.calledWith(response)).to.be.false())
       })
 
       it('should not call _handleError', () => {
-        return sut.poll().then(() => expect(sut._handleError.called).to.be.false)
+        return sut.poll().then(() => expect(sut._handleError.called).to.be.false())
       })
     })
 
     context('with the call to _getTrucode erroring', () => {
       beforeEach(() => {
-        sut._getTrucode.returns(Promise.reject('I blame Jones'))
+        sut._getTrucode.returns(Promise.reject(new Error('I blame Jones')))
       })
 
       it('should not call _get', () => {
-        return sut.poll().then(() => expect(sut._get.called).to.be.false)
+        return sut.poll().then(() => expect(sut._get.called).to.be.false())
       })
 
       it('should not call _scheduleNextTrucode', () => {
-        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false)
+        return sut.poll().then(() => expect(sut._scheduleNextTrucode.called).to.be.false())
       })
 
       it('should not call _handleResponse', () => {
-        return sut.poll().then(() => expect(sut._handleResponse.called).to.be.false)
+        return sut.poll().then(() => expect(sut._handleResponse.called).to.be.false())
       })
 
       it('should call _handleError', () => {
-        return sut.poll().then(() => expect(sut._handleError.called).to.be.true)
+        return sut.poll().then(() => expect(sut._handleError.called).to.be.true())
       })
     })
   })
@@ -394,7 +393,7 @@ describe('TruCodePoller', () => {
   describe('#_completed', () => {
     it('should set completed to true', () => {
       sut._completed()
-      expect(sut.completed).to.be.true
+      expect(sut.completed).to.be.true()
     })
 
     it('should clear payloadHandler', () => {

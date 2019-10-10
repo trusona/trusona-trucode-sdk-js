@@ -1,6 +1,6 @@
 export class CanvasContext {
-  constructor(matrix, params = {}) {
-    if (matrix === null || matrix === undefined){
+  constructor (matrix, params = {}) {
+    if (matrix === null || matrix === undefined) {
       throw new Error('A QR Matrix is required')
     }
 
@@ -17,12 +17,12 @@ export class CanvasContext {
     this.mergeOverrides(params)
   }
 
-  mergeOverrides(overrides){
-    this.shapeColors = ["#000"]
-    this.dotColor = "#000"
+  mergeOverrides (overrides) {
+    this.shapeColors = ['#000']
+    this.dotColor = '#000'
     this.containerWidth = this.matrix.length
 
-    if(overrides.shapeColors !== null && overrides.shapeColors !== undefined){
+    if (overrides.shapeColors !== null && overrides.shapeColors !== undefined) {
       this.shapeColors = overrides.shapeColors
     }
 
@@ -35,7 +35,7 @@ export class CanvasContext {
     }
   }
 
-  invalidMatrix(matrix) {
+  invalidMatrix (matrix) {
     const expected = matrix.length
     return matrix.find((column) => {
       if (column.length !== expected) {
