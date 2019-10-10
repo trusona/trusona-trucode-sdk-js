@@ -1,9 +1,9 @@
-import { expect } from "chai"
-import  { TruCode }  from "../src/tru_code"
+import './test_helper'
+import { TruCode } from '../src/tru_code'
 
 import { MockDrawing } from './mock_drawing'
 
-describe("TruCode", () => {
+describe('TruCode', () => {
   let validMatrix, invalidMatrix, drawing, validTruCode
   beforeEach(() => {
     drawing = new MockDrawing()
@@ -12,7 +12,7 @@ describe("TruCode", () => {
     validTruCode = new TruCode(drawing, validMatrix)
   })
 
-  describe("creating a tru code", () => {
+  describe('creating a tru code', () => {
     it('requires a drawing that quacks like svg.js', () => {
       expect(() => new TruCode(null, validMatrix)).to.throw()
       expect(() => new TruCode(undefined, validMatrix)).to.throw()
@@ -32,24 +32,23 @@ describe("TruCode", () => {
       })
     })
 
-    it("requires a valid matrix", () => {
+    it('requires a valid matrix', () => {
       expect(() => new TruCode(drawing, invalidMatrix)).to.throw()
       expect(() => new TruCode(drawing, validMatrix)).to.not.throw()
     })
-
   })
 
-  it("has a canvas context", () => {
+  it('has a canvas context', () => {
     const sut = validTruCode
-    expect(sut.context).to.have.property("shapeColors")
-    expect(sut.context).to.have.property("dotColor")
-    expect(sut.context).to.have.property("containerWidth")
+    expect(sut.context).to.have.property('shapeColors')
+    expect(sut.context).to.have.property('dotColor')
+    expect(sut.context).to.have.property('containerWidth')
   })
 
-  describe("drawing", () => {
-    it("should start with an unpaired beacon", () => {
+  describe('drawing', () => {
+    it('should start with an unpaired beacon', () => {
       const sut = validTruCode
-      expect(sut.hasPairedBeacon()).to.be.false
+      expect(sut.hasPairedBeacon()).to.be.false()
     })
 
     context('drawing a single dot', () => {
@@ -62,12 +61,11 @@ describe("TruCode", () => {
         const sut = new TruCode(mock, singleDotMatrix)
         sut.draw()
 
-        expect(mock.rect.called).to.be.true
-        expect(mock.rect.calledWith(1, 1)).to.be.true
+        expect(mock.rect.called).to.be.true()
+        expect(mock.rect.calledWith(1, 1)).to.be.true()
 
         // todo separate test?
-        expect(mock.radius.calledWith(0.8)).to.be.true
-
+        expect(mock.radius.calledWith(0.8)).to.be.true()
       })
     })
 
@@ -82,8 +80,8 @@ describe("TruCode", () => {
         const sut = new TruCode(mock, singleDotMatrix)
         sut.draw()
 
-        expect(mock.rect.called).to.be.true
-        expect(mock.rect.calledWith(3, 1)).to.be.true
+        expect(mock.rect.called).to.be.true()
+        expect(mock.rect.calledWith(3, 1)).to.be.true()
       })
     })
 
@@ -98,8 +96,8 @@ describe("TruCode", () => {
         const sut = new TruCode(mock, singleDotMatrix)
         sut.draw()
 
-        expect(mock.rect.called).to.be.true
-        expect(mock.rect.calledWith(1, 3)).to.be.true
+        expect(mock.rect.called).to.be.true()
+        expect(mock.rect.calledWith(1, 3)).to.be.true()
       })
     })
 
@@ -115,15 +113,14 @@ describe("TruCode", () => {
         const sut = new TruCode(mock, singleDotMatrix)
         sut.draw()
 
-        expect(mock.rect.called).to.be.true
-        expect(mock.rect.calledWith(2, 1)).to.be.true
-        expect(mock.attr.calledTwice).to.be.true
+        expect(mock.rect.called).to.be.true()
+        expect(mock.rect.calledWith(2, 1)).to.be.true()
+        expect(mock.attr.calledTwice).to.be.true()
 
         const attrArgs = mock.attr.getCall(1).args[0]
         expect(attrArgs.x).to.equal(1)
         expect(attrArgs.y).to.equal(1)
       })
     })
-
   })
 })

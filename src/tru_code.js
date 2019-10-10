@@ -2,21 +2,20 @@ import { CanvasContext } from './canvas_context'
 import { Shape } from './shape'
 import { Grid } from './grid'
 import { Easing } from './easing'
-import QRCode  from 'qrcode-svg'
+import QRCode from 'qrcode-svg'
 
 // TODO: Improve this class by making it easier to reuse the drawing method and not require
 // the payload each time you create a new one so that it's nicer to use an instance of this
 // object in the TruCodeRender
 export class TruCode {
-  constructor(drawing, payload, params = {}) {
+  constructor (drawing, payload, params = {}) {
     if (!drawing) {
-      throw new Error("A drawing that quacks like SVG.js is required")
+      throw new Error('A drawing that quacks like SVG.js is required')
     }
 
     if (payload.constructor === Array) {
       this.matrix = payload
-    }
-    else {
+    } else {
       this.matrix = this.encodePayloadAsMatrix(payload)
     }
 
@@ -33,8 +32,8 @@ export class TruCode {
     )
   }
 
-  getAnimationConfig(params) {
-    let defaults = {
+  getAnimationConfig (params) {
+    const defaults = {
       subSetModulo: 4,
       forwardDuration: 1800,
       forwardDelayMultiplier: 2,
@@ -46,7 +45,7 @@ export class TruCode {
     }
 
     if (params && params.animationConfig) {
-      let animationConfig = params.animationConfig
+      const animationConfig = params.animationConfig
 
       if (animationConfig.subSetModulo) {
         defaults.subSetModulo = parseInt(animationConfig.subSetModulo)
@@ -79,17 +78,16 @@ export class TruCode {
       if (animationConfig.repeatDelay) {
         defaults.repeatDelay = parseInt(animationConfig.repeatDelay)
       }
-
     }
 
     return defaults
   }
 
-  encodePayloadAsMatrix(payload){
+  encodePayloadAsMatrix (payload) {
     var qrcode = new QRCode({
       content: payload,
       padding: 0,
-      ecl: "L"
+      ecl: 'L'
     })
 
     const qrModules = qrcode.qrcode.modules
@@ -101,11 +99,11 @@ export class TruCode {
     return matrix
   }
 
-  getMatrixWidth() {
+  getMatrixWidth () {
     return this.context.matrix[0].length
   }
 
-  getContainerWidth() {
+  getContainerWidth () {
     if (this.context.containerWidth) {
       return this.getMatrixWidth()
     } else {
@@ -113,15 +111,15 @@ export class TruCode {
     }
   }
 
-  hasPairedBeacon() {
+  hasPairedBeacon () {
     return this.pairedBeacon
   }
 
-  draw() {
-    let self = this
+  draw () {
+    const self = this
 
-    let code = this.drawing.group("code").attr({
-      id: "qr-code",
+    const code = this.drawing.group('code').attr({
+      id: 'qr-code',
       fill: '#FFF'
     })
 
@@ -129,7 +127,7 @@ export class TruCode {
     var points = self.grid.points
 
     for (var index = 0; index < length; index++) {
-      let point = points[index]
+      const point = points[index]
       let shape
       let pointsForDrawing
 
@@ -148,11 +146,11 @@ export class TruCode {
 
         self.grid.disablePoint(point)
       } else if (point.partOfSquare(self.grid)) {
-        let pointSquare = point.partOfSquare(self.grid)
+        const pointSquare = point.partOfSquare(self.grid)
         shape = new Shape(pointSquare.points)
         shape.drawSquare(code, self.context.shapeColors, pointSquare.width)
         self.grid.disablePoints(pointSquare.points)
-      }else{
+      } else {
         var easternNeighbors = point.contiguousEasternNeighbors(self.grid)
         var southernNeighbors = point.contiguousSouthernNeighbors(self.grid)
         let drawToTheEast
@@ -175,8 +173,8 @@ export class TruCode {
     this.runAnimations(code.select('.tru-code-dot'))
   }
 
-  runAnimations(circles) {
-    let self = this
+  runAnimations (circles) {
+    const self = this
     const subSetModulo = this.animationConfig.subSetModulo
     const forwardDuration = this.animationConfig.forwardDuration
     const forwardDelayMultiplier = this.animationConfig.forwardDelayMultiplier
@@ -186,22 +184,20 @@ export class TruCode {
     const reverseScaleFactor = this.animationConfig.reverseScaleFactor
     const repeatDelay = this.animationConfig.repeatDelay
 
-
     circles.each(function (iterator) {
       this.animate().stop(false, true)
       if (iterator % subSetModulo === 0) {
         this.animate({
-            ease: Easing.bounce,
-            duration: forwardDuration,
-            delay: forwardDelayMultiplier * iterator
-          })
+          ease: Easing.bounce,
+          duration: forwardDuration,
+          delay: forwardDelayMultiplier * iterator
+        })
           .scale(forwardScaleFactor).animate({
             ease: Easing.bounce,
             duration: reverseDuration
           })
           .scale(reverseScaleFactor)
           .delay(reverseDelayMultiplier * iterator)
-
       }
 
       if (circles.last() === this) {

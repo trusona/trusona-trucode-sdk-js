@@ -1,5 +1,4 @@
-import { expect } from 'chai'
-import sinon from 'sinon'
+import './test_helper'
 import { TruCodeService } from '../src/tru_code_service'
 import MockAxios from './mock_axios'
 
@@ -11,7 +10,7 @@ describe('TruCodeService', () => {
 
   beforeEach(() => {
     mockAxios = new MockAxios()
-    sut       = new TruCodeService(host, relyingPartyId, mockAxios)
+    sut = new TruCodeService(host, relyingPartyId, mockAxios)
   })
 
   describe('#constructor', () => {
@@ -33,7 +32,7 @@ describe('TruCodeService', () => {
       mockAxios.post.withArgs('https://more.tacos.com/api/v2/trucodes', request)
         .returns(Promise.resolve(respond))
 
-      return sut.create().then((response) => { expect(response).to.deep.equal(respond)})
+      return sut.create().then((response) => { expect(response).to.deep.equal(respond) })
     })
 
     it('should set expires_at based on payload', () => {
@@ -45,13 +44,12 @@ describe('TruCodeService', () => {
 
       return sut.create().then((response) => expect(response.data.expires_at).to.equal(1508276913087))
     })
-
   })
 
   describe('#get', () => {
     it('should GET from the beacons service status endpoint', () => {
       const trucodeId = 'abc123'
-      const respond  = { data: { id: trucodeId, paired: false }}
+      const respond = { data: { id: trucodeId, paired: false } }
       mockAxios.get
         .withArgs('https://more.tacos.com/api/v2/trucodes/abc123')
         .returns(Promise.resolve(respond))
