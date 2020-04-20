@@ -19,7 +19,7 @@ Include the trucode.js script tag before the `</body>` of your document
 
 ```html
   <!-- existing content -->
-  <script type="text/javascript"src="https://static.trusona.net/web-sdk/js/trucode-1.0.1.js"></script>
+  <script type="text/javascript"src="https://static.trusona.net/web-sdk/js/trucode-1.0.2.js"></script>
   </body>
 </html>
 ```
