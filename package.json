@@ -1,6 +1,6 @@
 {
   "name": "trusona-trucode",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Library for rendering TruCodes used for identifying Trusona enabled devices",
   "main": "dist/index.js",
   "scripts": {
@@ -20,17 +20,17 @@
     "dist"
   ],
   "devDependencies": {
-    "@babel/core": "^7.6.0",
+    "@babel/core": "^7.9.0",
     "@babel/node": "^7.6.0",
-    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-external-helpers": "^7.8.3",
     "@babel/preset-env": "^7.6.0",
-    "@babel/register": "^7.6.0",
+    "@babel/register": "^7.9.0",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
     "mocha": "^6.2.3",
     "replace-in-file": "^4.1.3",
-    "simple-git": "^1.126.0",
+    "simple-git": "^1.132.0",
     "sinon": "^7.4.2",
     "standard": "^14.3.1",
     "webpack": "^4.39.3",
@@ -42,7 +42,7 @@
   "homepage": "https://github.com/trusona/trusona-trucode-sdk-js#readme",
   "dependencies": {
     "axios": "^0.19.0",
-    "js-base64": "^2.5.1",
+    "js-base64": "^2.5.2",
     "lodash": "^4.17.11",
     "qrcode-svg": "^1.0.0",
     "svg.js": "^2.7.1",
