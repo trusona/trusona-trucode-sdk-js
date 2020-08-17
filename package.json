@@ -28,7 +28,7 @@
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
-    "mocha": "^8.0.1",
+    "mocha": "^8.1.1",
     "replace-in-file": "^6.1.0",
     "simple-git": "^2.15.0",
     "sinon": "^9.0.2",
@@ -42,8 +42,9 @@
   "homepage": "https://github.com/trusona/trusona-trucode-sdk-js#readme",
   "dependencies": {
     "axios": "^0.19.0",
+    "core-js": "^3.6.5",
     "js-base64": "2.5.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.20",
     "qrcode-svg": "^1.0.0",
     "svg.js": "^2.7.1",
     "url-parse": "^1.4.7"

@@ -35,8 +35,7 @@
     Trusona.createTruCode({
         truCodeUrl: 'https://api.staging.trusona.net',
         relyingPartyId: '2AF12AE7-B57E-4366-BEB4-B29F7E0C52EF'
-      },
-      (truCode) => console.log(truCode)
+      }, function(truCode) { console.log(truCode) }
     )
   </script>
 </body>
