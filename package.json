@@ -1,6 +1,6 @@
 {
   "name": "trusona-trucode",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Library for rendering TruCodes used for identifying Trusona enabled devices",
   "main": "dist/index.js",
   "scripts": {
@@ -43,7 +43,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
-    "js-base64": "2.5.2",
+    "js-base64": "3.6.0",
     "lodash": "^4.17.20",
     "qrcode-svg": "^1.0.0",
     "svg.js": "^2.7.1",
