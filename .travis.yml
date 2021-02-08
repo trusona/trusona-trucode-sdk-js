@@ -15,3 +15,9 @@ deploy:
     api_key: $NPM_AUTH_TOKEN
     on:
       tags: true
+notifications:
+  slack:
+    on_success: always
+    on_failure: always
+    rooms:
+    - secure: "sfv2YoyKwAfZBIC3DRgeI/tinLfhZ1iBqBC9xi22xhPW3Yovsyq0I8Eqh/Hxu2cMDJwjwXLs5IAzRoLvP+UQ1I4Q7n838Jhb1KIz8eC/PVWZjtDZHPnByizp3KtvmErT0XZd2e0Pu5kwPOccH1pM8PhYo0JU2EQv6DCuxEnYYbo+L7Hb1Y0BAKfMZBvQuR0gp8LFVu0oAl6KsOU4ykoxFSVXfsKhzLYaUaiksIDEzPEV5MSyfwX6MgLwDC+Pb6jsDDYgg+fT+SvB+q5L4LgZawBcP4yYBU7ZybbQdf+AiTsfz7VuYYj60c5G99e0zqMiqhj2dXjhUB0Y7KUH5edN3x6fWWae2ahmpxyIXtueeRzZpiPyN4ISN6sSxzFOhImVVIX0ReW3CfOE2T63Kd9ZtckxaHyrs07XTQmvoL7f4/2EauWV4IyZetr38pNAMNI2gVD09VWTaN5QrlHmv3I9CrPSuIwxANJSMN/oiAXaNHeMZdxbQNO6pMojK1wIkV+cXhXD9OwV4ZLax4S/vHoRBBw6i+5fmoX+q3C87tAeVhllYrjpz/e50yh9YD5ZvH9QBwG6kKtz4B67aAzIonUpowbP37sVJuN/+wntnLlhMB9NTrJekY8QZFDdbaL/VV4kgUVon28dXoCLqj1c/onC8FN/URDqKwbEmG0yjT6++Gc="
