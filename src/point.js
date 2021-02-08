@@ -21,9 +21,9 @@ export class Point {
   }
 
   contiguousEasternNeighbors (grid) {
-    var point = this
-    var neighbors = [point]
-    var n
+    let point = this
+    const neighbors = [point]
+    let n
 
     while (point.hasEasternNeighbor(grid)) {
       n = point.hasEasternNeighbor(grid)
@@ -35,9 +35,9 @@ export class Point {
   }
 
   contiguousSouthernNeighbors (grid) {
-    var point = this
-    var neighbors = [point]
-    var n
+    let point = this
+    const neighbors = [point]
+    let n
 
     while (point.hasSouthernNeighbor(grid)) {
       n = point.hasSouthernNeighbor(grid)
@@ -49,16 +49,16 @@ export class Point {
   }
 
   partOfSquare (grid) {
-    var east = this.contiguousEasternNeighbors(grid)
-    var south = this.contiguousSouthernNeighbors(grid)
+    const east = this.contiguousEasternNeighbors(grid)
+    const south = this.contiguousSouthernNeighbors(grid)
 
-    var pointsInSquare = []
+    const pointsInSquare = []
 
     if (east.length === south.length && east.length >= 1 && south.length >= 1) {
       // maybe a square?
-      for (var x = 0; x < east.length; x++) {
-        for (var y = 0; y < south.length; y++) {
-          var enabled = grid.findPoint(this.x + x, this.y + y)
+      for (let x = 0; x < east.length; x++) {
+        for (let y = 0; y < south.length; y++) {
+          const enabled = grid.findPoint(this.x + x, this.y + y)
           if (enabled) {
             pointsInSquare.push(enabled)
           }
@@ -81,7 +81,7 @@ export class Point {
   }
 
   hasNeighbor (x, y, grid) {
-    var neighbor = grid.points.find(function (p) {
+    const neighbor = grid.points.find(function (p) {
       return x === p.x && y === p.y && p.enabled === true
     })
 

@@ -19,9 +19,9 @@ export class Shape {
       filledWith = shapeColors
     }
 
-    var point = first(this.squares)
+    const point = first(this.squares)
 
-    var rect = drawing.rect(width, width).attr({
+    const rect = drawing.rect(width, width).attr({
       x: point.x,
       y: point.y
     }).radius(1 / width)
@@ -34,11 +34,11 @@ export class Shape {
   }
 
   draw (drawing, shapeColors, drawToTheEast) {
-    var squares = uniq(this.squares, function (element) {
+    const squares = uniq(this.squares, function (element) {
       return element.x + ',' + element.y + ',' + element.w + ',' + element.h
     })
 
-    var minX = min(squares, function (s) {
+    const minX = min(squares, function (s) {
       return s.x
     })
 
@@ -52,7 +52,7 @@ export class Shape {
       filledWith = shapeColors
     }
 
-    var rect
+    let rect
     if (drawToTheEast) {
       rect = drawing.rect(squares.length, 1)
     } else {

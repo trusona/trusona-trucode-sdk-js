@@ -10,7 +10,7 @@ export class Grid {
   }
 
   generatePoints (matrix) {
-    var points = []
+    const points = []
     matrix.forEach((column, xCoordinate) => {
       column.forEach((item, yCoordinate) => {
         points.push(new Point(xCoordinate, yCoordinate, item === 1))
