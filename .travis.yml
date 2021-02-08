@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-- lts/*
+  - lts/*
 before_deploy:
-- pip install --user awscli
+  - pip install --user awscli
 deploy:
   - provider: script
     skip_cleanup: true
