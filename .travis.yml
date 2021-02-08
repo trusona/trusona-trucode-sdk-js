@@ -1,8 +1,9 @@
+os: linux
 language: node_js
 node_js:
-- lts/*
+  - lts/*
 before_deploy:
-- pip install --user awscli
+  - pip install --user awscli
 deploy:
   - provider: script
     skip_cleanup: true
@@ -15,3 +16,9 @@ deploy:
     api_key: $NPM_AUTH_TOKEN
     on:
       tags: true
+notifications:
+  slack:
+    on_success: always
+    on_failure: always
+    rooms:
+      - secure: "ls1bOsbzJoXrSFNPoetSxwIBs8wV7xZkS5i4UNRo3sx2wV/1tMI9a/dY+3ijLEgGozEzr7QjMH20R8YUzoigwS01V48iw5qnoR1KWAQeAcXyp3G7cmwo++wVE0yyfukERmyJApS2xO8nq8owhaQ732BpL9XjlgpSU5KOfE6LUHPKj2I8WnBNgX+2OKlWmpdtnY/m//8ZXdtXos4OJE1DmvYr4rRUG6DiyxlTNOLoB6VvgDLd7LmNZyRF9t8AbKcHgMJb/ams2p/MN1H/8TtwTUbr6z9rdVMiNpZA1RYwKivv5gW9Y5pnxtFUN5vurwFUChAZqhR75wOtOyJvEF3ISZ/jznwavbca3rSMj48qTOvrwj2PWWsq9sSwrlFsipWnhQ6/9YKTxNMrfiZwEllhIuc2D2rgzOWzafmaCoHvmuSvWhJN8NhbEvuMrQG1mo9oi0+EMR5GAqvgWlXQ1lyfdsjxqokjuT2BGKdz98mNM19nfLIhcAWDT+gdzBK2u4x0S8ju1td9rZRk+LBaBn04stCnikq7/gLcYB/WQtqaz8ASwZGLvQ9Fk3tfcbP6qzunyJTtdbAynhsdj15miFztVAUH5f14aRn5Guu0XMaPz6O/lHmwOrECHrkp6DSzvZwfSB0siL1FHWX+jS7zF7qdt1fcUbd1gopF19I1AtEQ+38="

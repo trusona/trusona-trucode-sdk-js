@@ -40,6 +40,8 @@ export class CanvasContext {
     return matrix.find((column) => {
       if (column.length !== expected) {
         return true
+      } else {
+        return false
       }
     })
   }
