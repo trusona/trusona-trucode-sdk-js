@@ -13,15 +13,17 @@ module.exports = [{
     libraryExport: 'default'
   },
   mode: 'production',
-  node: {
-    fs: 'empty'
-  },
   module: {
     rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
       use: 'babel-loader'
     }]
+  },
+  resolve: {
+    fallback: {
+      fs: false
+    }
   }
 }, {
   entry: './src/index.js',
@@ -36,14 +38,16 @@ module.exports = [{
     libraryExport: 'default'
   },
   mode: 'production',
-  node: {
-    fs: 'empty'
-  },
   module: {
     rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
       use: 'babel-loader'
     }]
+  },
+  resolve: {
+    fallback: {
+      fs: false
+    }
   }
 }]
