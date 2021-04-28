@@ -1,8 +1,27 @@
+os: linux
 language: node_js
-node_js:
-- lts/*
+node_js: lts/*
+cache:
+  directories:
+  - "$HOME/.gradle/caches/"
+  - vendor/
+before_install:
+  - rvm install "ruby-2.7.2"
+  - rvm 2.7.2
+  - bundle config set path 'vendor/cache'
+  - gem install bundler
+before_script:
+  - bundle exec thin -d -p 9080 -R config.ru start
+  - bin/start_sc.sh
+script:
+  - npm test
+  - npm run build
+  - bundle exec rake
+after_script:
+  - bundle exec thin -d -p 9080 -R config.ru stop
+  - bin/stop_sc.sh
 before_deploy:
-- pip install --user awscli
+  - pip install --user awscli
 deploy:
   - provider: script
     skip_cleanup: true

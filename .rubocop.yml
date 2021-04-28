@@ -1,0 +1,28 @@
+Style/Documentation:
+  Enabled: false
+
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  Include:
+    - 'spec/**/*'
+
+  Exclude:
+    - 'vendor/**/*'
+    - 'tmp/**'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'Rakefile'
+    - 'Gemfile'
+
+Metrics:
+  Exclude:
+    - 'spec/**/*'
+
+Layout/LineLength:
+  Exclude:
+  - 'spec/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+  - 'spec/**/*'

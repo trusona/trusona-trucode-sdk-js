@@ -63,3 +63,4 @@ dist/
 .vscode/
 .DS_Store
 .idea
+vendor/
