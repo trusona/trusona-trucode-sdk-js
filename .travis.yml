@@ -9,6 +9,7 @@ cache:
     - node_modules/
     - vendor/
 before_install:
+  - bin/start_sc.sh
   - rvm install "ruby-2.7.2"
   - rvm 2.7.2
   - bundle config set path 'vendor/cache'
@@ -18,7 +19,6 @@ install:
   - npm install
 before_script:
   - bundle exec thin -d -p 9080 -R config.ru start
-  - bin/start_sc.sh
 script:
   - npm test
   - npm run build
