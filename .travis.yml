@@ -12,6 +12,7 @@ before_install:
 install:
   - gem install bundler
   - bundle install
+  - npm install
 before_script:
   - bundle exec thin -d -p 9080 -R config.ru start
   - bin/start_sc.sh
