@@ -3,7 +3,6 @@
 source 'https://www.rubygems.org'
 
 gem 'capybara'
-gem 'capybara-screenshot'
 gem 'dotenv'
 gem 'parallel_split_test'
 gem 'thin'
