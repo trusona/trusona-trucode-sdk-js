@@ -2,7 +2,6 @@
 
 require 'capybara'
 require 'capybara/rspec'
-require 'capybara-screenshot/rspec'
 require 'selenium-webdriver'
 require 'rspec'
 require 'sauce_whisk'
