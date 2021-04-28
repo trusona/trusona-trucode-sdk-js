@@ -9,7 +9,9 @@ before_install:
   - rvm install "ruby-2.7.2"
   - rvm 2.7.2
   - bundle config set path 'vendor/cache'
+install:
   - gem install bundler
+  - bundle install
 before_script:
   - bundle exec thin -d -p 9080 -R config.ru start
   - bin/start_sc.sh
@@ -34,3 +36,9 @@ deploy:
     api_key: $NPM_AUTH_TOKEN
     on:
       tags: true
+notifications:
+  slack:
+    on_success: always
+    on_failure: always
+    rooms:
+      - secure: "n7FlT+6J6YtAsEtrnEzDcQ57lUJ6RjstjoXmmrXhyX3G8PEdwJ4YQjr8OKXOGDZXvGg9E2CPfG2HLpd1tpvuJ+/5mgltYf8FLbdTApwc5m1fPvrqXFA8U1pgffeXb4HdsWAAPhUVuiNdc8bwTIP3pv2ljjA6qbTQFBETS351FE9XJJ5iCpyJG1+/3/RKid7+HPbYrJOT3uGgOrGutzYHsZdG+8d551QwdX2CcvZ5lmr2xO1L//jS2UgWGUll3fxQiuNvMnOhgL7/yrggiaKdpkXFWqp80RJf6jvL5HqBrqooRf4Pp+GpyBU1LftzmZBdPAuCJ7cJ4/g/5H/YpQg4sr6d/6YRxGTqCl6gu7+gh9WELCCs6hTtloMJpC7I1lAL0sm1dczw7aZmaU6D3UTPLH6OlCu2Ttg6sCBRCVpU/uQpWSi5+CFFDhnEdyRf31XMP55PhKLqa4jLTcqxIfeFA03P17hEn5zNdxQ+eJKjW4fdpF1FAbEVT89hJVlR55jCTjixPoYtTPCL1hTivVShnOfNbIgX71kQkYGsiFGXLKFIoVCAReenfDkIHnxnuLe/fgL7wU0q6f/tfdDf4oaGIdGb/q77LvRULMOKQt6jvqNeVQ6v35GorpdyX12nBVB6pqqzfZ4KWuOw1PUhhED6J8K3iMfjzkuvjijRNuBJ/v0="
