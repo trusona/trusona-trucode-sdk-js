@@ -9,3 +9,11 @@ describe 'render trucode' do
     expect(page).to have_selector(:id, 'qr-code', visible: true)
   end
 end
+
+describe 'draw trucode' do
+  before { visit 'http://localhost:9080/examples/draw-tru-code.html' }
+
+  it 'displays a very beautiful QR code' do
+    expect(page).to have_selector(:id, 'qr-code', visible: true)
+  end
+end
