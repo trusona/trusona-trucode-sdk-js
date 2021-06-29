@@ -19,6 +19,10 @@ class Trusona {
     return truCodeService.create().then((response) => callback(response.data)) // {id, expires_at, payload}
   }
 
+  static drawTruCode (element, payload, config = {}) {
+    this._drawTruCode(element, payload, config)
+  }
+
   static _drawTruCode (element, payload, config) {
     element.innerHTML = ''
     new TruCode(SVG(element.id), payload, config).draw()
