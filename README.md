@@ -144,7 +144,7 @@ Custom:
 
 ### Rendering Arbitrary Payloads
 
-You can use this SDK to also render QR codes with your own provided payloads instead of the TruCode payload that is automatically fetched. For example, if you our guide for [Passwordless Authentication without an app](https://docs.trusona.com/guides/mobile-auth-for-browser/).
+You can use this SDK to also render QR codes with your own provided payloads instead of the TruCode payload that is automatically fetched. For example, if you use our guide for [Passwordless Authentication without an app](https://docs.trusona.com/guides/mobile-auth-for-browser/).
 
 Given the same HTML from above:
 
