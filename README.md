@@ -141,3 +141,28 @@ Custom:
     onError: handleError
   });
 ```
+
+### Rendering Arbitrary Payloads
+
+You can use this SDK to also render QR codes with your own provided payloads instead of the TruCode payload that is automatically fetched. For example, if you our guide for [Passwordless Authentication without an app](https://docs.trusona.com/guides/mobile-auth-for-browser/).
+
+Given the same HTML from above:
+
+```html
+  <div id="tru-code">
+  </div>
+```
+
+And this JavaScript on the page
+
+```javascript
+Trusona.drawTruCode(document.getElementById('tru-code'), 'your-own-payload')
+```
+
+Then an SVG of a QR code with 'your-own-payload' as the content will be drawn using default colors and animated using the default animation parameters. You can also provide the QR options detailed above to customize the look of the drawn QR.
+
+```javascript
+  var qrConfig = {shapeColors: ["#0f0", "#f00", "#00f"]};
+
+  Trusona.drawTruCode(document.getElementById('tru-code'), 'your-own-payload', qrConfig);
+```
