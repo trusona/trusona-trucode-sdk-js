@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/trusona/trusona-trucode-sdk-js#readme",
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "js-base64": "2.6.4",
     "lodash": "^4.17.20",
