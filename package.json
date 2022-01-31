@@ -31,7 +31,7 @@
     "mocha": "^9.0.1",
     "replace-in-file": "^6.1.0",
     "simple-git": "^2.15.0",
-    "sinon": "^12.0.1",
+    "sinon": "^13.0.0",
     "standard": "^14.3.1",
     "webpack": "^4.39.3",
     "webpack-cli": "^4.3.1"
