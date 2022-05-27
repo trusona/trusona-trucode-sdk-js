@@ -91,10 +91,11 @@ GEM
     sauce_whisk (0.3.2)
       json
       rest-client (~> 2.0)
-    selenium-webdriver (4.1.0)
+    selenium-webdriver (4.2.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2)
+      rubyzip (>= 1.2.2, < 3.0)
+      websocket (~> 1.0)
     thin (1.8.1)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -103,6 +104,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.1)
     unicode-display_width (2.1.0)
+    websocket (1.2.9)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
