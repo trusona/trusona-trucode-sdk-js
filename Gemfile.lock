@@ -82,7 +82,7 @@ GEM
     rubocop-discourse (2.5.0)
       rubocop (>= 1.1.0)
       rubocop-rspec (>= 2.0.0)
-    rubocop-performance (1.14.3)
+    rubocop-performance (1.15.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rspec (2.13.1)
@@ -104,7 +104,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.1)
-    unicode-display_width (2.2.0)
+    unicode-display_width (2.3.0)
     websocket (1.2.9)
     xpath (3.2.0)
       nokogiri (~> 1.8)
