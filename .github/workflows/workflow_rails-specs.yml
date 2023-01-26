@@ -23,13 +23,12 @@ jobs:
         node-version: '14'
         cache: npm
     - uses: browser-actions/setup-chrome@v1
-    - run: |
-        bundle install
-        npm install
-        bundle exec thin -d -p 9080 -R config.ru start
-        bin/start_sc.sh
-        npm test
-        npm run build
-        bundle exec rake
-        bundle exec thin -d -p 9080 -R config.ru stop
-        bin/stop_sc.sh
+    - run: bundle install
+    - run: npm install
+    - run: bundle exec thin -d -p 9080 -R config.ru start
+    - run: bin/start_sc.sh
+    - run: npm test
+    - run: npm run build
+    - run: bundle exec rake
+    - run: bundle exec thin -d -p 9080 -R config.ru stop
+    - run: bin/stop_sc.sh
