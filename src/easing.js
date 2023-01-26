@@ -1,8 +1,8 @@
 export class Easing {
   static bounce (pos) {
-    var s = 7.5625
-    var p = 2.75
-    var l
+    const s = 7.5625
+    const p = 2.75
+    let l
 
     if (pos < (1 / p)) {
       l = s * pos * pos

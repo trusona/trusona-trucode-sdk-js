@@ -45,7 +45,7 @@ describe('TruCodeRenderer', () => {
 
     it('requires a truCodeConfig object', () => {
       [null, undefined, ''].forEach((truCodeConfig) => {
-        expect(() => new TruCodeRenderer(Object.assign(validProperties, { truCodeConfig: truCodeConfig }))).to.throw('truCodeConfig')
+        expect(() => new TruCodeRenderer(Object.assign(validProperties, { truCodeConfig }))).to.throw('truCodeConfig')
       })
     })
 
