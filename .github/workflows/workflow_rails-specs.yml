@@ -1,0 +1,41 @@
+name: Specs
+on: [ workflow_call ]
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    env:
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGHOST: localhost
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: ${{ env.PGUSER }}
+          POSTGRES_PASSWORD: ${{ env.PGPASSWORD }}
+        ports:
+        - '5432:5432'
+      redis:
+        image: redis:latest
+        ports:
+        - '3789:3789'
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+        cache: npm
+    - run: |
+        bundle install
+        npm install
+        bundle exec thin -d -p 9080 -R config.ru start
+        bin/start_sc.sh
+        npm test
+        npm run build
+        bundle exec rake
+        bundle exec thin -d -p 9080 -R config.ru stop
+        bin/stop_sc.sh
