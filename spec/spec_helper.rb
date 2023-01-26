@@ -41,6 +41,7 @@ RSpec.configure do |config|
       Capybara::Selenium::Driver.new(app,
                                      browser: :remote,
                                      url: url,
+                                     options: desired_capabilities,
                                      desired_capabilities: desired_capabilities)
     end
     Capybara.current_driver = :sauce
