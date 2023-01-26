@@ -13,6 +13,9 @@ permissions:
 jobs:
   test:
     uses: ./.github/workflows/workflow_rails-specs.yml
+    secrets:
+      SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+      SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
 
   static:
     uses: ./.github/workflows/workflow_rails-static-analysis.yml
