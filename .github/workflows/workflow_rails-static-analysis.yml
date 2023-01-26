@@ -13,6 +13,7 @@ jobs:
       with:
         node-version: '14'
         cache: npm
+    - run: npm install
     - run: bundle exec rubocop
     - run: bundle exec bundle-audit update
     - uses: dependency-check/Dependency-Check_Action@main
