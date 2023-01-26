@@ -1,0 +1,34 @@
+name: Specs
+on:
+  workflow_call:
+    secrets:
+      SAUCE_USERNAME:
+        required: true
+      SAUCE_ACCESS_KEY:
+        required: true
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    env:
+      SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+      SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+        cache: npm
+    - uses: browser-actions/setup-chrome@v1
+    - run: bundle install
+    - run: npm install
+    - run: bundle exec thin -d -p 9080 -R config.ru start
+    - run: bin/start_sc.sh
+    - run: npm test
+    - run: npm run build
+    - run: bundle exec rake
+    - run: bundle exec thin -d -p 9080 -R config.ru stop
+    - run: bin/stop_sc.sh
