@@ -4,22 +4,6 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
-    env:
-      PGUSER: postgres
-      PGPASSWORD: password
-      PGHOST: localhost
-    services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: ${{ env.PGUSER }}
-          POSTGRES_PASSWORD: ${{ env.PGPASSWORD }}
-        ports:
-        - '5432:5432'
-      redis:
-        image: redis:latest
-        ports:
-        - '3789:3789'
     steps:
     - uses: actions/checkout@v3
     - uses: ruby/setup-ruby@v1
