@@ -19,7 +19,9 @@ RSpec.configure do |config|
       url = 'https://ondemand.us-west-1.saucelabs.com/wd/hub'
       SauceWhisk.data_center = :US_WEST
 
-      options = { 'sauce:options': { name: test.full_description,
+      options = {
+        'browserName': 'chrome',
+        'sauce:options': { name: test.full_description,
                                      build: build_name,
                                      username: ENV['SAUCE_USERNAME'],
                                      access_key: ENV['SAUCE_ACCESS_KEY'] } }
