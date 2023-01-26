@@ -41,6 +41,7 @@ export class CanvasContext {
       if (column.length !== expected) {
         return true
       }
+      return false
     })
   }
 }
