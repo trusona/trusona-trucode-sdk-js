@@ -84,7 +84,7 @@ export class TruCode {
   }
 
   encodePayloadAsMatrix (payload) {
-    var qrcode = new QRCode({
+    const qrcode = new QRCode({
       content: payload,
       padding: 0,
       ecl: 'L'
@@ -123,10 +123,10 @@ export class TruCode {
       fill: '#FFF'
     })
 
-    var length = self.grid.points.length
-    var points = self.grid.points
+    const length = self.grid.points.length
+    const points = self.grid.points
 
-    for (var index = 0; index < length; index++) {
+    for (let index = 0; index < length; index++) {
       const point = points[index]
       let shape
       let pointsForDrawing
@@ -151,8 +151,8 @@ export class TruCode {
         shape.drawSquare(code, self.context.shapeColors, pointSquare.width)
         self.grid.disablePoints(pointSquare.points)
       } else {
-        var easternNeighbors = point.contiguousEasternNeighbors(self.grid)
-        var southernNeighbors = point.contiguousSouthernNeighbors(self.grid)
+        const easternNeighbors = point.contiguousEasternNeighbors(self.grid)
+        const southernNeighbors = point.contiguousSouthernNeighbors(self.grid)
         let drawToTheEast
 
         if (easternNeighbors > southernNeighbors) {
