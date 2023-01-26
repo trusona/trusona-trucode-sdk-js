@@ -41,8 +41,7 @@ RSpec.configure do |config|
       Capybara::Selenium::Driver.new(app,
                                      browser: :remote,
                                      url: url,
-                                     options: desired_capabilities,
-                                     desired_capabilities: desired_capabilities)
+                                     options: desired_capabilities)
     end
     Capybara.current_driver = :sauce
   end
@@ -54,8 +53,8 @@ RSpec.configure do |config|
   end
 
   def build_name
-    if ENV['TRAVIS']
-      "#{ENV['TRAVIS_REPO_SLUG']}: #{ENV['TRAVIS_JOB_NUMBER']}"
+    if ENV['GITHUB_REF_NAME']
+      "#{ENV['GITHUB_REF_NAME']}: #{ENV['GITHUB_SHA']}"
     elsif ENV['SAUCE_START_TIME']
       ENV['SAUCE_START_TIME']
     else
