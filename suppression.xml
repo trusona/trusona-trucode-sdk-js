@@ -6,6 +6,7 @@
    ]]></notes>
     <packageUrl regex="true">^pkg:npm/glob\-parent@.*$</packageUrl>
     <vulnerabilityName>CVE-2020-28469</vulnerabilityName>
+    <vulnerabilityName>GHSA-ww39-953v-wcq6</vulnerabilityName>
     <vulnerabilityName>1088261</vulnerabilityName>
     <vulnerabilityName>1091181</vulnerabilityName>
   </suppress>

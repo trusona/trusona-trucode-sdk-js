@@ -13,9 +13,6 @@ module.exports = [{
     libraryExport: 'default'
   },
   mode: 'production',
-  node: {
-    fs: 'empty'
-  },
   module: {
     rules: [{
       test: /\.js$/,
@@ -36,9 +33,6 @@ module.exports = [{
     libraryExport: 'default'
   },
   mode: 'production',
-  node: {
-    fs: 'empty'
-  },
   module: {
     rules: [{
       test: /\.js$/,
