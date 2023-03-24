@@ -15,6 +15,13 @@
     file name: webpack:4.46.0
     ]]></notes>
     <packageUrl regex="true">^pkg:npm/webpack@.*$</packageUrl>
-    <cpe>cpe:/a:webpack.js:webpack</cpe>
+    <vulnerabilityName>CVE-2023-28154</vulnerabilityName>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+    file name: word-wrap:1.2.3
+    ]]></notes>
+    <packageUrl regex="true">^pkg:npm/word\-wrap@.*$</packageUrl>
+    <vulnerabilityName>CVE-2023-26115</vulnerabilityName>
   </suppress>
 </suppressions>
