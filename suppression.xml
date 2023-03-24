@@ -8,5 +8,20 @@
     <vulnerabilityName>CVE-2020-28469</vulnerabilityName>
     <vulnerabilityName>1088261</vulnerabilityName>
     <vulnerabilityName>1091181</vulnerabilityName>
+    <vulnerabilityName>GHSA-ww39-953v-wcq6</vulnerabilityName>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+    file name: webpack:4.46.0
+    ]]></notes>
+    <packageUrl regex="true">^pkg:npm/webpack@.*$</packageUrl>
+    <vulnerabilityName>CVE-2023-28154</vulnerabilityName>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+    file name: word-wrap:1.2.3
+    ]]></notes>
+    <packageUrl regex="true">^pkg:npm/word\-wrap@.*$</packageUrl>
+    <vulnerabilityName>CVE-2023-26115</vulnerabilityName>
   </suppress>
 </suppressions>
