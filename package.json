@@ -57,5 +57,17 @@
       "expect",
       "sinon"
     ]
-  }
+  },
+  "bin": {
+    "trucode": "bin/sync-version.js"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "keywords": [
+    "trusona",
+    "trucode",
+    "authentication"
+  ]
 }
