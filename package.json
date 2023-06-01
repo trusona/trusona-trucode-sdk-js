@@ -1,6 +1,6 @@
 {
   "name": "@trusona/trucode",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Library for rendering TruCodes used for identifying Trusona enabled devices",
   "main": "dist/index.js",
   "scripts": {
