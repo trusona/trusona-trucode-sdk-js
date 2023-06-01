@@ -28,7 +28,7 @@ Include the trucode.js script tag before the `</body>` of your document
 ### As an NPM package
 
 ```bash
-npm install --save trusona-trucode
+npm install --save @trusona/trucode
 ```
 
 Import it with:
