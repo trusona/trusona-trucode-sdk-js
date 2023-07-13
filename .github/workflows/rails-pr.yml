@@ -5,7 +5,7 @@ on:
   push:
     branches: [ '*' ]
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: "gh-actions"
   cancel-in-progress: true
 permissions:
   id-token: write
