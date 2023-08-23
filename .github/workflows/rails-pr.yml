@@ -1,7 +1,5 @@
 name: Rails CI
 on:
-  pull_request:
-    branches: [ master ]
   push:
     branches: [ '*' ]
 concurrency:
