@@ -7,6 +7,8 @@ updates:
     pull-request-branch-name:
       separator: "-"
     open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "selenium-webdriver"
 
   - package-ecosystem: "npm"
     directory: "/"
