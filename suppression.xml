@@ -24,4 +24,11 @@
     <packageUrl regex="true">^pkg:npm/axios@.*$</packageUrl>
     <vulnerabilityName>CVE-2023-45857</vulnerabilityName>
   </suppress>
+  <suppress>
+    <notes><![CDATA[
+   file name: follow-redirects:1.15.3
+   ]]></notes>
+    <packageUrl regex="true">^pkg:npm/follow\-redirects@.*$</packageUrl>
+    <vulnerabilityName>CVE-2023-26159</vulnerabilityName>
+  </suppress>
 </suppressions>
