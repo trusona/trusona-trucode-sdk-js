@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:,">
+    <title>TruCode SDK animation demo</title>
+    <style>
+      :root {
+        color: #25104f;
+        font: 16px/1.5 system-ui, sans-serif;
+        background: #f7f4fc;
+      }
+
+      body {
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        place-items: center;
+      }
+
+      main {
+        width: min(88vw, 34rem);
+        padding: 2rem;
+        text-align: center;
+        background: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 1rem 4rem rgb(37 16 79 / 12%);
+      }
+
+      #trucode {
+        width: min(76vw, 28rem);
+        aspect-ratio: 1;
+        margin: 1rem auto;
+      }
+
+      #trucode svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      .tru-code-drawing {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      button {
+        padding: 0.7rem 1.2rem;
+        color: white;
+        font: inherit;
+        font-weight: 700;
+        background: #7b46d1;
+        border: 0;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Animated TruCode</h1>
+      <p>The code assembles now and shimmers every three seconds.</p>
+      <div id="trucode"></div>
+      <button id="replay" type="button">Replay entry animation</button>
+    </main>
+    <script src="../dist/trucode.js"></script>
+    <script>
+      const element = document.getElementById("trucode")
+      // A three-segment signed TruCode captured from the disposable local
+      // Gateway. It is intentionally expired and is only a rendering fixture.
+      const gatewayPayload = [
+        "eyJhbGciOiJIUzI1NiJ9",
+        "eyJ0aWQiOiIzZDc1MDQ4Yi1mYTkxLTQ5OTQtOTEzNi1lMmNiYjU0MzcwNGYiLCJycGkiOiJjZmVjNjNiNC02YjkxLTQxNjYtYjNiZi1iMDYwZjFiOGUyNjMiLCJleHAiOjE3ODQ5NDEwNDMwMDAsInJlZyI6InNpbmdsZSJ9",
+        "AGl7wyaOyx8G2i7W_OALPkpEAfJ9_CO0cuZ1L-WyHk4"
+      ].join(".")
+      const draw = () => Trusona.drawTruCode(
+        element,
+        gatewayPayload,
+        { animationConfig: { repeatDelay: 3600, maximumDelay: 520 } }
+      )
+
+      draw()
+      document.getElementById("replay").addEventListener("click", draw)
+    </script>
+  </body>
+</html>

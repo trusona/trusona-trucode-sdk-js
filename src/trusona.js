@@ -1,31 +1,43 @@
-import SVG from 'svg.js'
-import { TruCode } from './tru_code'
-import { TruCodeRenderer } from './tru_code_renderer'
-import { TruCodeService } from './tru_code_service'
+import { drawTruCode } from './svg_renderer.js'
+import { TruCodeRenderer } from './tru_code_renderer.js'
+import { TruCodeService } from './tru_code_service.js'
 
 class Trusona {
   static renderTruCode (properties) {
-    properties.window = window
-    new TruCodeRenderer(properties).render()
+    return new TruCodeRenderer({
+      ...properties,
+      window: properties.window || globalThis.window
+    }).render()
   }
 
   static getTruCode (truCodeId, truCodeConfig, callback) {
-    const truCodeService = new TruCodeService(truCodeConfig.truCodeUrl, truCodeConfig.relyingPartyId)
-    return truCodeService.get(truCodeId).then((response) => callback(response.data.paired))
+    const service = this._service(truCodeConfig)
+    return service.get(truCodeId).then((response) => {
+      callback(response.data.paired)
+      return response
+    })
   }
 
   static createTruCode (truCodeConfig, callback) {
-    const truCodeService = new TruCodeService(truCodeConfig.truCodeUrl, truCodeConfig.relyingPartyId)
-    return truCodeService.create().then((response) => callback(response.data)) // {id, expires_at, payload}
+    const service = this._service(truCodeConfig)
+    return service.create().then((response) => {
+      callback(response.data)
+      return response
+    })
   }
 
   static drawTruCode (element, payload, config = {}) {
-    this._drawTruCode(element, payload, config)
+    return drawTruCode(element, payload, config)
   }
 
-  static _drawTruCode (element, payload, config) {
-    element.innerHTML = ''
-    new TruCode(SVG(element.id), payload, config).draw()
+  static _drawTruCode (element, payload, config = {}) {
+    return this.drawTruCode(element, payload, config)
+  }
+
+  static _service (config) {
+    if (!config?.truCodeUrl) throw new Error('A valid TruCode URL is required.')
+    if (!config?.relyingPartyId) throw new Error('A relyingPartyId is required.')
+    return new TruCodeService(config.truCodeUrl, config.relyingPartyId)
   }
 }
 

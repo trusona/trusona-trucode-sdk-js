@@ -1,168 +1,143 @@
-# Web SDK - TruCode
+# TruCode Web SDK
 
-A JavaScript library for rendering TruCodes used for identifying Trusona enabled devices.
+The TruCode Web SDK draws animated, branded TruCodes and can optionally issue
+and monitor them through the Trusona API.
+
+Version 2.1 keeps the established browser API while replacing the legacy
+Webpack, Babel, Axios, SVG.js, Lodash, and polyfill stack. It uses native
+browser networking and SVG animation. The only runtime dependency is the QR
+encoder.
 
 ## Requirements
-The Trusona Web SDK is supported by the following browsers:
 
-- Internet Explorer 10 or higher
-- Microsoft Edge (latest version)
-- Google Chrome (latest version)
-- Firefox (latest version)
-- Safari (latest version)
+- Chrome, Edge, Firefox, or Safari with ES2020 support
+- Node.js 20 or newer for development
+
+The renderer honors `prefers-reduced-motion`.
 
 ## Installation
 
-### From the Trusona CDN
-
-Include the trucode.js script tag before the `</body>` of your document
-
-```html
-  <!-- existing content -->
-  <script type="text/javascript"src="https://static.trusona.net/web-sdk/js/trucode-1.1.0.js"></script>
-  </body>
-</html>
+```bash
+npm install @trusona/trucode
 ```
 
+ES modules:
 
-### As an NPM package
+```javascript
+import Trusona from '@trusona/trucode'
+```
+
+CommonJS:
+
+```javascript
+const Trusona = require('@trusona/trucode').default
+```
+
+The browser bundle is `dist/trucode.js` and exposes `window.Trusona`.
+
+## Draw an existing payload
+
+This is the preferred integration when your application owns TruCode issuance
+and status polling:
+
+```html
+<div id="tru-code"></div>
+```
+
+```javascript
+const drawing = Trusona.drawTruCode(
+  document.getElementById('tru-code'),
+  signedPayload,
+  {
+    dotColor: '#7B46D1',
+    shapeColors: ['#7B46D1', '#5856C2', '#4D4A97'],
+    animationConfig: {
+      repeatDelay: 7200
+    }
+  }
+)
+
+// Stop active animations before removing the view.
+drawing.stop()
+```
+
+`drawTruCode(element, payload, config)` retains the 1.x and 2.0 public
+signature. It returns a stoppable drawing controller; callers that ignored the
+old return value continue to work.
+
+The payload can also be a square matrix containing truthy and falsy module
+values.
+
+## Issue and monitor a TruCode
+
+`renderTruCode` retains the original all-in-one interface:
+
+```javascript
+const renderer = Trusona.renderTruCode({
+  truCodeConfig: {
+    truCodeUrl: 'https://api.trusona.net',
+    relyingPartyId: '<RELYING_PARTY_ID>',
+    qr: {
+      dotColor: '#7B46D1',
+      shapeColors: ['#7B46D1', '#5856C2', '#4D4A97']
+    }
+  },
+  truCodeElement: document.getElementById('tru-code'),
+  onPaired: truCodeId => {
+    // Continue the server-owned authentication flow.
+  },
+  onError: error => {
+    // Show a retry state.
+  }
+})
+
+renderer.stop()
+```
+
+The SDK:
+
+1. creates a TruCode at `POST /api/v2/trucodes`;
+2. draws its signed payload;
+3. polls `GET /api/v2/trucodes/:id`;
+4. renews the code before it expires;
+5. stops on pairing, explicit `stop()`, `pagehide`, or `beforeunload`.
+
+It limits concurrent requests and stops after five consecutive errors.
+
+## Retained helper APIs
+
+```javascript
+Trusona.createTruCode(config, data => {})
+Trusona.getTruCode(id, config, paired => {})
+```
+
+Both methods still invoke the callback and return a Promise with the
+Axios-compatible `{ data, status, headers }` response shape.
+
+## Configuration
+
+| Property | Default | Notes |
+| --- | --- | --- |
+| `dotColor` | `#7B46D1` | Finder and isolated-module color |
+| `shapeColors` | Trusona purple palette | Up to 12 validated hex colors |
+| `quietZone` | `3` | Clamped to 2–8 modules |
+| `animationConfig.duration` | `520` | Initial assembly duration in ms |
+| `animationConfig.delayStep` | `7` | Stagger per SVG mark in ms |
+| `animationConfig.maximumDelay` | `420` | Maximum assembly stagger in ms |
+| `animationConfig.repeatDelay` | `7200` | Retained and validated for API compatibility |
+
+Legacy `forwardDuration` and `forwardDelayMultiplier` values are accepted as
+aliases for `duration` and `delayStep`.
+
+## Development
 
 ```bash
-npm install --save @trusona/trucode
+npm ci
+npm test
+npm audit --audit-level=high
+npm pack --dry-run
 ```
 
-Import it with:
-
-```javascript
-const Trusona = require('trusona-trucode')
-```
-
-## Usage
-
-Given this HTML:
-
-```html
-  <div id="tru-code">
-  </div>
-```
-
-And this Javascript on the same page:
-
-```javascript
-  var handlePaired = function(truCodeId) {
-    // The truCodeId that was scanned by a Trusona enabled device. Send this to your backend so they can figure out the deviceIdentifier.
-  };
-
-  var handleError = function() {
-    // If an error occurred fetching the TruCode and/or it could not be rendered.
-  };
-
-  Trusona.renderTruCode({
-    truCodeConfig: {
-      truCodeUrl: 'https://api.trusona.net',
-      relyingPartyId: '<YOUR_RELYING_PARTY_ID>',
-      qr: {}
-    },
-    truCodeElement: document.getElementById('tru-code'),
-    onPaired: handlePaired,
-    onError: handleError
-  });
-```
-
-Then an SVG representation of a QR Code will be drawn using default colors and animated using the default animation parameters.
-
-### Options
-
-|         Name          | Required | Default      |                                           Description                                                                                         |
-| :-------------------- | :------: | :----------: | :-------------------------------------------------------------------------------------------------------------------------------------------- |
-| `truCodeConfig`       |    Y     |  null        | The configuration for the fetching and rendering of TruCodes. Is provided by the Server SDK.                                                  |
-| `truCodeUrl`          |    Y     |  null        | The Trusona API URL where to fetch TruCodes from.                                                                                             |
-| `relyingPartyId`      |    Y     |  null        | The Trusona issued relying party ID that has been assigned to your company.                                                                   |
-| `qr`                  |    N     |  see below   | The configuration for rendering TruCodes (colors, width, animations, etc).                                                                    |
-| `truCodeElement`      |    Y     |  null        | The DOM element to contain the rendered TruCodes.                                                                                             |
-| `onPaired`            |    Y     |  null        | The callback function to call when a TruCode has been scanned. It will be passed a string parameter containing the TruCodeId that was paired. |
-| `onError`             |    Y     |  false       | The callback function to call if an error occurred fetching or rendering TruCodes.                                                            |
-
-### QR Options
-
-An optional parameter allows for customization of the SVG drawing.
-
-* Shape Colors
-* Dot Color
-* Container Width
-* Animation Configuration
-
-### Shape Colors
-
-An array of HEX color codes can be used to specify the colors to be used when drawing the SVG.
-
-Default:
-```javascript
-  ["#000"]
-```
-
-Custom:
-```javascript
-  var qrConfig = {shapeColors: ["#0f0", "#f00", "#00f"]};
-
-  Trusona.renderTruCode({
-    truCodeConfig: {
-      truCodeUrl: 'https://api.trusona.net',
-      relyingPartyId: '<YOUR_RELYING_PARTY_ID>',
-      qr: qrConfig
-    },
-    truCodeElement: document.getElementById('tru-code'),
-    onPaired: handlePaired,
-    onError: handleError
-  });
-```
-
-### Dot Color
-
-A single HEX color code can be used to specify the color of any individual dots drawn in the SVG.
-
-Default:
-```javascript
-"#000"
-```
-
-Custom:
-```javascript
-  var qrConfig = {dotColor: "#0f0"};
-
-  Trusona.renderTruCode({
-    truCodeConfig: {
-      truCodeUrl: 'https://api.trusona.net',
-      relyingPartyId: '<YOUR_RELYING_PARTY_ID>',
-      qr: qrConfig
-    },
-    truCodeElement: document.getElementById('tru-code'),
-    onPaired: handlePaired,
-    onError: handleError
-  });
-```
-
-### Rendering Arbitrary Payloads
-
-You can use this SDK to also render QR codes with your own provided payloads instead of the TruCode payload that is automatically fetched. For example, if you use our guide for [Passwordless Authentication without an app](https://docs.trusona.com/guides/mobile-auth-for-browser/).
-
-Given the same HTML from above:
-
-```html
-  <div id="tru-code">
-  </div>
-```
-
-And this JavaScript on the page
-
-```javascript
-Trusona.drawTruCode(document.getElementById('tru-code'), 'your-own-payload')
-```
-
-Then an SVG of a QR code with 'your-own-payload' as the content will be drawn using default colors and animated using the default animation parameters. You can also provide the QR options detailed above to customize the look of the drawn QR.
-
-```javascript
-  var qrConfig = {shapeColors: ["#0f0", "#f00", "#00f"]};
-
-  Trusona.drawTruCode(document.getElementById('tru-code'), 'your-own-payload', qrConfig);
-```
+`npm test` builds ESM, CommonJS, and browser bundles and runs the compatibility,
+renderer, polling, networking, accessibility, reduced-motion, and error-path
+tests.
